@@ -1,4 +1,6 @@
 const {DataTypes,Model}=  require("sequelize");
+const connection = require("../../dbconnection");
+//const { Connection } = require("pg");
  
   class users extends model{
 
@@ -23,4 +25,12 @@ allowNull:false,
         allowNull:false,
     }
 
-  },{})
+  },
+  {
+    name:"users",
+    timestamps:true,
+    paranoid:true,
+    sequelize: connection,
+
+  });
+  module.exports=users;
