@@ -1,24 +1,50 @@
 const express = require("express");
-var bodyParser = require('body-parser')
+const bodyParser = require("body-parser")
+const morgan = require("morgan");
+const{db}=require("./models/index")
+const connection = require("./dbconnection");
+//imported express pakage here
+const userRouter = require("./Routes/userRouter");
+const authRouter = require("./Routes/authRouter");
+const port = 3000;
 
-const userRoutes = require("./Routes/user.Routes");
-const adminRoutes = require("./Routes/admin.Routes");
+//added port
+const app = express();
+//created server here
+app.use(bodyParser.urlencoded({ extended: true }));
+//parse application/json
+app.use(bodyParser.json());
+app.use(morgan("dev"));
 
-const app = express()
-//Body-Parser
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 
 
 // API Calling
-app.use("/user", userRoutes);
-app.use("/admin", adminRoutes);
+app.use("/user", userRouter);
+app.use("/auth", authRouter);
+
+
+app.use((req,res,next)=>{
+    return res.send({
+        status:400,
+        error:"request not found",
+    });
+    next(createError(404));
+});
 
 
 
 // Port
-const port = 3000;
-app.listen(port, ()=>{
-    console.log("The app is running on port "+ port);
 
+
+db.connection
+.sync({alter:true,logging:true})
+.then(()=>{
+    app.listen(port, ()=>{
+        console.log(`app listening on port ${port} `);
+
+});
 })
+.catch((error)=>{
+    console.log(error);
+    console.log("unable to connect to database");
+});
