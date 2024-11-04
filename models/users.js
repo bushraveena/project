@@ -1,9 +1,9 @@
 const {DataTypes,Model}=  require("sequelize");
-const connection = require("../../dbconnection");
+const connection = require("../dbconnection");
 const { toDefaultValue } = require("sequelize/lib/utils");
 //const { Connection } = require("pg");
  
-  class users extends model{}
+  class users extends Model{}
   
   users.init({
     userid:{

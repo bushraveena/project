@@ -1,5 +1,5 @@
 const Routes = require("express").Router();
-const {login,logout}=require("/MERN-23/todolist/Controller/authcontroller");
+const {login,logout}=require("../Controller/authController");
 const{createvalidator}=require("../Validator/authValidator");
 
 

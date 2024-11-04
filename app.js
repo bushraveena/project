@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const morgan = require("morgan");
-const{db}=require("./models/index")
+const {db,models}=require("./models/index")  
 const connection = require("./dbconnection");
 //imported express pakage here
 const userRouter = require("./Routes/userRouter");
@@ -18,6 +18,10 @@ app.use(morgan("dev"));
 
 
 
+
+
+
+ 
 // API Calling
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
@@ -30,6 +34,7 @@ app.use((req,res,next)=>{
     });
     next(createError(404));
 });
+
 
 
 
