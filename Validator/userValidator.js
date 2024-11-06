@@ -1,5 +1,5 @@
 const joi =require("joi");
-
+const responsehandler = require("../responsehandler");
 const createUserValidator =joi.object({
     name : joi.string().min(3).max(34).required(),
     username : joi.string().alphanum().required(),
@@ -18,7 +18,7 @@ const update =joi.object({
 });
 
 const getDelete =joi.object({
-    name : joi.string().required(),
+    username : joi.string().required(),
 });
 module.exports ={
     // createUserSchema
@@ -28,11 +28,7 @@ module.exports ={
             await create.validateAsync(req.body);
             next(); // usinf this because in userRouter we have to move to next function createUser in parameter
         }catch(error){
-            return res.send({
-                status:"error",
-                code:400,
-                error:error.message,
-            });
+            return responsehandler(res,{error:error.message});
         }
     },
 
@@ -41,11 +37,7 @@ module.exports ={
             await update.validateAsync(req.body);
             next();
         }catch(error){
-            return res.send({
-                status:"error",
-                code:400,
-                error:error.message,
-            });
+            return responsehandler(res,{error:error.message});
         }
     },
 
@@ -54,11 +46,7 @@ module.exports ={
             await getDelete.validateAsync(req.query);
             next();
         }catch(error){
-            return res.send({
-                status:"error",
-                code:400,
-                error:error.message,
-            });
+            return responsehandler(res,{error:error.message});
         }
     }
 

@@ -1,8 +1,8 @@
  
  const connection= require("../dbconnection");
  
- const users = require("./definitions/ users");
- const models = { users };
+ const users = require("./definitions/users");
+ const models = {users};
  
  //relations
  
