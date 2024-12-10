@@ -5,6 +5,6 @@ const{createValidator}=require("../Validator/authValidator");
 
 
 Routes.get("/login",createValidator ,login);
-Routes.get("/logout", logout);
+//Routes.get("/logout", logout);
 
 module.exports = Routes;

@@ -2,53 +2,34 @@ const { DataTypes, Model } = require("sequelize");
 const connection = require("../../dbconnection");
 const { v4: uuid } = require("uuid");
 
-class CartItems extends Model {}
+class cartItem extends Model {}
 
-CartItems.init(
+cartItem.init(
   {
-    cart_item_id: {
-      type: DataTypes.UUID,
+    cartitemId: {
+      type: DataTypes.STRING(60),
       primaryKey: true,
-      defaultValue: () => uuid(),
+      
     },
-    cart_id: {
-      type: DataTypes.UUID,
+    name: { 
+      type: DataTypes.STRING(60),
       allowNull: false,
-      references: {
-        model: "Cart",
-        key: "cart_id",
-      },
-    },
-    product_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: "Products",
-        key: "product_id",
-      },
+      defaultValue:""
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 1,
+      unique:true,
     },
-    price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+    
+   
     },
-    subtotal: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: function () {
-        return this.price * this.quantity;
-      },
-    },
-  },
+  
   {
-    modelName: "CartItems",
+    modelName: "cartItem",
     timestamps: false,
     sequelize: connection,
   }
 );
 
-module.exports = CartItems;
+module.exports = cartItem;

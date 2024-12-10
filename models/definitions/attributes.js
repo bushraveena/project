@@ -1,76 +1,60 @@
 // const { DataTypes, Model } = require("sequelize");
 // const connection = require("../../dbconnection");
 // const { v4: uuid } = require("uuid");
-// const vendor = require("./vendor");
 
-// class product extends Model {}
+// class attributes extends Model {}
 
-// product.init(
+// attributes.init(
 //   {
-//     productId: {
+//     attributesId: {
 //       type: DataTypes.STRING(60),
 //       primaryKey: true,
 //     },
-//     description: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     productName: {
+//     name: {
 //       type: DataTypes.STRING(60),
 //       allowNull: false,
 //     },
-//     vendorId: {
-//       type: DataTypes.STRING(),
+//     value: {
+//       type: DataTypes.STRING(60),
 //       allowNull: false,
-//       references: {
-//         model: vendor,
-//         key: "vendorId",
-//       },
 //     },
 //   },
+
 //   {
-//     modelName: "product",
+//     modelName: "attributes",
 //     timestamps: true,
 //     paranoid: true,
 //     sequelize: connection,
 //   }
 // );
-// product.beforeCreate(async (product) => {
-//   product.productId = uuid();
+// attributes.beforeCreate(async (attributes) => {
+//   attributes.attributesId = uuid();
 // });
-// module.exports = product;
+// module.exports = attributes;
+
 
 const { DataTypes, Model } = require("sequelize");
 const connection = require("../../dbConnection");
 const { v4: uuid } = require("uuid"); // v4 : uuid to change package name we set manually
-const vendors = require("./vendor");
 
-class product extends Model {}
-product.init(
+class attributes extends Model {}
+attributes.init(
   {
-    productId: {
+    attributesId: {
       primaryKey: true,
       type: DataTypes.STRING(60), //default length of String is 255 and we can define in ()
     },
-    productName: {
+    name: {
       type: DataTypes.STRING(60),
       allowNull: false,
     },
-    description: {
+    value: {
       type: DataTypes.STRING(),
       allowNull: false,
-    },
-    vendorId: {
-      type: DataTypes.STRING(),
-      allowNull: false,
-      references: {
-        model: vendors,
-        key: "vendorId",
-      },
     },
   },
   {
-    name: "product", // if you dont provide it will save class name for table name
+    name: "attributes", // if you dont provide it will save class name for table name
     timestamps: true, //creadted at & updaed at
     paranoid: true, //add time of delete in deletedAt
     sequelize: connection,
@@ -78,8 +62,12 @@ product.init(
 );
 
 //hook
-product.beforeCreate(async (product) => {
-  product.productId = uuid();
+attributes.beforeCreate(async (attributes) => {
+  attributes.attributesId = uuid();
 });
 
-module.exports = product;
+// users.afterCreate((user)=>{
+//     delete user.dataValues.password;
+// });
+
+module.exports = attributes;
